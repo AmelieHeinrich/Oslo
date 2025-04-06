@@ -18,7 +18,7 @@ RaytracingPipeline::RaytracingPipeline(RaytracingPipelineSpecs specs)
     mSignature = specs.Signature;
 
     D3D12_DXIL_LIBRARY_DESC lib = {};
-    lib.DXILLibrary.BytecodeLength = specs.Library.Bytecode.size() * sizeof(uint32_t);
+    lib.DXILLibrary.BytecodeLength = specs.Library.Bytecode.size();
     lib.DXILLibrary.pShaderBytecode = specs.Library.Bytecode.data();
     lib.NumExports = 0;
 
