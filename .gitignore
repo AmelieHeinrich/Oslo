@@ -1,6 +1,9 @@
 # IDE
 .vscode
 
+# Specifics
+log.txt
+
 # Binaries
 .xmake
 build

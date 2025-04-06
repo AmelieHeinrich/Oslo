@@ -16,6 +16,7 @@ target("DXC")
     set_kind("headeronly")
     add_headerfiles("$(projectdir)/ThirdParty/DXC/include/DXC/*.h")
     add_includedirs("$(projectdir)/ThirdParty/DXC/include", { public = true })
+    add_syslinks("$(projectdir)/ThirdParty/DXC/lib/dxcompiler.lib", { public = true })
 
 target("GLM")
     set_kind("headeronly")

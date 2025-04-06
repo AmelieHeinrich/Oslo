@@ -51,7 +51,9 @@ target("Oslo")
     end)
 
 target("Sandbox")
+    set_rundir(".")
     set_kind("binary")
+
     add_files("Sandbox/**.cpp")
     add_includedirs(".")
     add_deps("Oslo")

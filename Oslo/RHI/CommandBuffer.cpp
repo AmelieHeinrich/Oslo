@@ -106,6 +106,18 @@ void CommandBuffer::SetTopology(Topology topology)
     mList->IASetPrimitiveTopology(D3D12_PRIMITIVE_TOPOLOGY(topology));
 }
 
+void CommandBuffer::SetGraphicsPipeline(std::shared_ptr<GraphicsPipeline> pipeline)
+{
+    mList->SetPipelineState(pipeline->GetPipeline());
+    mList->SetGraphicsRootSignature(pipeline->GetRootSignature()->GetSignature());
+}
+
+void CommandBuffer::SetComputePipeline(std::shared_ptr<ComputePipeline> pipeline)
+{
+    mList->SetPipelineState(pipeline->GetPipeline());
+    mList->SetComputeRootSignature(pipeline->GetSignature()->GetSignature());
+}
+
 void CommandBuffer::SetRenderTargets(const std::vector<std::shared_ptr<View>> targets, std::shared_ptr<View> depth)
 {
     std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> cpus;

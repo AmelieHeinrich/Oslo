@@ -13,6 +13,8 @@
 
 #include "RHI/RHI.hpp"
 
+#include "Asset/Shader.hpp"
+
 namespace Oslo
 {
     void Init();

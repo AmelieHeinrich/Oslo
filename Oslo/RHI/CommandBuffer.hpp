@@ -9,6 +9,8 @@
 #include "View.hpp"
 #include "Resource.hpp"
 #include "Buffer.hpp"
+#include "GraphicsPipeline.hpp"
+#include "ComputePipeline.hpp"
 
 #include <vector>
 
@@ -38,6 +40,8 @@ public:
     
     void SetViewport(float x, float y, float width, float height);
     void SetTopology(Topology topology);
+    void SetGraphicsPipeline(std::shared_ptr<GraphicsPipeline> pipeline);
+    void SetComputePipeline(std::shared_ptr<ComputePipeline> pipeline);
     void SetRenderTargets(const std::vector<std::shared_ptr<View>> targets, std::shared_ptr<View> depth);
     void SetVertexBuffer(std::shared_ptr<Buffer> buffer);
     void SetIndexBuffer(std::shared_ptr<Buffer> buffer);
