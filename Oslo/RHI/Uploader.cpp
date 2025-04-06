@@ -94,7 +94,7 @@ void Uploader::Flush()
     sData.CmdBuffer = std::make_shared<CommandBuffer>(RHI::GetGraphicsQueue(), true);
     sData.CmdBuffer->Begin();
 
-    LOG_INFO("Flushing {0} upload requests ({1} buffer uploads, {2} texture uploads, {3} acceleration structure builds)", sData.Requests.size(), sData.BufferRequests, sData.TextureRequests, sData.ASRequests);
+    LOG_INFO("Flushing %llu upload requests (%d buffer uploads, %d texture uploads, %d acceleration structure builds)", sData.Requests.size(), sData.BufferRequests, sData.TextureRequests, sData.ASRequests);
     for (auto request : sData.Requests) {        
         switch (request.Type) {
             case UploadRequestType::BufferCPUToGPU: {
