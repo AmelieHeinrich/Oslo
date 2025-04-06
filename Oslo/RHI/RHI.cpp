@@ -4,6 +4,7 @@
 //
 
 #include "RHI.hpp"
+#include "Uploader.hpp"
 
 #include <imgui.h>
 #include <backends/imgui_impl_sdl3.h>
@@ -59,6 +60,8 @@ void RHI::Init()
     }
 
     sData.FontDescriptor = sData.Heaps[DescriptorHeapType::ShaderResource]->Allocate();
+    
+    Uploader::Init();
 }
 
 void RHI::ConnectWindow(std::shared_ptr<Window> window)
