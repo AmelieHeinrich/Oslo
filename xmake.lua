@@ -27,6 +27,7 @@ target("Oslo")
         "STB",
         { public = true }
     )
+    add_syslinks("d3d12", "dxgi", "user32")
 
     if is_mode("debug") then
         set_symbols("debug")

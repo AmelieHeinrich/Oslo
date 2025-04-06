@@ -15,7 +15,7 @@ constexpr uint64_t MEGABYTE = 1024 * 1024;
 constexpr uint64_t GIGABYTE = 1024 * 1024 * 1024;
 
 #if defined(_WIN32)
-    #define HG_WINDOWS
+    #define OSLO_WINDOWS
 #endif
 
 #if defined(OSLO_DEBUG)

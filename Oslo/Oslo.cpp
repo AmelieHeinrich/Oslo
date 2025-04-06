@@ -5,13 +5,17 @@
 
 #include "Oslo.hpp"
 
+#include "RHI/RHI.hpp"
+
 void Oslo::Init()
 {
     Context::Init();
+    RHI::Init();
 }
 
 void Oslo::Exit()
 {
+    RHI::Exit();
     Context::Allocator->Report();
     Context::Exit();
 }

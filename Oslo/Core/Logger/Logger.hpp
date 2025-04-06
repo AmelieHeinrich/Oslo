@@ -8,6 +8,8 @@
 #include <Core/Common.hpp>
 #include <cstdarg>
 
+#undef ERROR
+
 enum class LogLevel
 {
     INFO,

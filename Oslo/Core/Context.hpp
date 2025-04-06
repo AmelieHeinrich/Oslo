@@ -19,14 +19,14 @@ public:
     static ILogger* Logger;
 };
 
-#define LOG_INFO(fmt, ...) Context::Logger->Info(__FILE__, __LINE__, fmt, __VA_ARGS__)
-#define LOG_WARN(fmt, ...) Context::Logger->Warn(__FILE__, __LINE__, fmt, __VA_ARGS__)
-#define LOG_ERROR(fmt, ...) Context::Logger->Error(__FILE__, __LINE__, fmt, __VA_ARGS__)
-#define LOG_CRITICAL(fmt, ...) Context::Logger->Critical(__FILE__, __LINE__, fmt, __VA_ARGS__)
-#define LOG_DEBUG(fmt, ...) Context::Logger->Debug(__FILE__, __LINE__, fmt, __VA_ARGS__)
+#define LOG_INFO(fmt, ...)      Context::Logger->Info(__FILE__, __LINE__, fmt, __VA_ARGS__)
+#define LOG_WARN(fmt, ...)      Context::Logger->Warn(__FILE__, __LINE__, fmt, __VA_ARGS__)
+#define LOG_ERROR(fmt, ...)     Context::Logger->Error(__FILE__, __LINE__, fmt, __VA_ARGS__)
+#define LOG_CRITICAL(fmt, ...)  Context::Logger->Critical(__FILE__, __LINE__, fmt, __VA_ARGS__)
+#define LOG_DEBUG(fmt, ...)     Context::Logger->Debug(__FILE__, __LINE__, fmt, __VA_ARGS__)
 
-#define MEMORY_ALLOC(size) Context::Allocator->Allocate(size, __LINE__, __FILE__)
-#define MEMORY_FREE(block) Context::Allocator->Free(block)
+#define MEMORY_ALLOC(size)      Context::Allocator->Allocate(size, __LINE__, __FILE__)
+#define MEMORY_FREE(block)      Context::Allocator->Free(block)
 #define TEMP_MEMORY_ALLOC(size) Context::TempAllocator->Allocate(size, __LINE__, __FILE__)
 
 #define USE_TRACKING_ALLOCATOR \
