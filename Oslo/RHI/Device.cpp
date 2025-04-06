@@ -59,7 +59,6 @@ Device::Device()
         if (pair.second > bestAdapter.second) {
             bestAdapter = pair;
         }
-        LOG_DEBUG("Found GPU %s with score %llu", UTF::WideToAscii(desc.Description).c_str(), pair.second);
     }
     mAdapter = bestAdapter.first;
 
