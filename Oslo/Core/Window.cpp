@@ -44,3 +44,8 @@ void Window::GetSize(int& width, int& height)
 {
     SDL_GetWindowSize(mWindow, &width, &height);
 }
+
+void* Window::GetHandle()
+{
+    return SDL_GetPointerProperty(SDL_GetWindowProperties(mWindow), SDL_PROP_WINDOW_WIN32_HWND_POINTER, nullptr);
+}

@@ -22,6 +22,7 @@ public:
     bool IsOpen() const;
 
     void GetSize(int& width, int& height);
+    void* GetHandle();
     
     SDL_Window* GetWindow() { return mWindow; }
 private:

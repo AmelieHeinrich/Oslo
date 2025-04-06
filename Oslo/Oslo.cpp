@@ -13,6 +13,11 @@ void Oslo::Init()
     RHI::Init();
 }
 
+void Oslo::AttachWindow(std::shared_ptr<Window> window)
+{
+    RHI::ConnectWindow(window);
+}
+
 void Oslo::Exit()
 {
     RHI::Exit();
