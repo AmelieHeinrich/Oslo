@@ -164,6 +164,11 @@ void CommandBuffer::ComputePushConstants(const void *data, uint32_t size, int in
     mList->SetComputeRoot32BitConstants(index, size / 4, data, 0);
 }
 
+void CommandBuffer::BindComputeTLAS(std::shared_ptr<TLAS> tlas, int index)
+{
+    mList->SetComputeRootDescriptorTable(index, tlas->GetDescriptor().GPU);
+}
+
 void CommandBuffer::ClearDepth(std::shared_ptr<View> view)
 {
     mList->ClearDepthStencilView(view->GetDescriptor().CPU, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);

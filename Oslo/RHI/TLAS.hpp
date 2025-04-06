@@ -25,6 +25,7 @@ public:
     ~TLAS();
 
     int Bindless() const { return mSRV.Index; }
+    DescriptorHeap::Descriptor GetDescriptor() const { return mSRV; }
 private:
     DescriptorHeap::Descriptor mSRV;
 };

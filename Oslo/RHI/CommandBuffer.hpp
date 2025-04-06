@@ -55,6 +55,7 @@ public:
 
     void GraphicsPushConstants(const void *data, uint32_t size, int index);
     void ComputePushConstants(const void *data, uint32_t size, int index);
+    void BindComputeTLAS(std::shared_ptr<TLAS> tlas, int index);
 
     void ClearDepth(std::shared_ptr<View> view);
     void ClearRenderTarget(std::shared_ptr<View> view, float r, float g, float b);
