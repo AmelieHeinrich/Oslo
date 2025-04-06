@@ -118,6 +118,20 @@ void CommandBuffer::SetComputePipeline(std::shared_ptr<ComputePipeline> pipeline
     mList->SetComputeRootSignature(pipeline->GetSignature()->GetSignature());
 }
 
+void CommandBuffer::SetRaytracingPipeline(std::shared_ptr<RaytracingPipeline>pipeline)
+{
+    mCurrentRT = pipeline;
+
+    mList->SetPipelineState1(pipeline->GetPipeline());
+    mList->SetComputeRootSignature(pipeline->GetSignature()->GetSignature());
+}
+
+void CommandBuffer::SetMeshPipeline(std::shared_ptr<MeshPipeline> pipeline)
+{
+    mList->SetPipelineState(pipeline->GetPipeline());
+    mList->SetGraphicsRootSignature(pipeline->GetSignature()->GetSignature());
+}
+
 void CommandBuffer::SetRenderTargets(const std::vector<std::shared_ptr<View>> targets, std::shared_ptr<View> depth)
 {
     std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> cpus;
@@ -176,6 +190,27 @@ void CommandBuffer::Dispatch(int x, int y, int z)
     mList->Dispatch(x, y, z);
 }
 
+void CommandBuffer::TraceRays(int width, int height)
+{
+    if (mCurrentRT == nullptr) {
+        LOG_ERROR("Please bind a raytracing pipeline before calling TraceRays");
+    }
+    uint64_t address = mCurrentRT->GetTables()->GetAddress();
+
+    D3D12_DISPATCH_RAYS_DESC dispatchDesc = {};
+    dispatchDesc.RayGenerationShaderRecord.StartAddress = address;
+    dispatchDesc.RayGenerationShaderRecord.SizeInBytes = D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES;
+    dispatchDesc.MissShaderTable.StartAddress = address + D3D12_RAYTRACING_SHADER_TABLE_BYTE_ALIGNMENT;
+    dispatchDesc.MissShaderTable.SizeInBytes = D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES;
+    dispatchDesc.HitGroupTable.StartAddress = address + (2 * D3D12_RAYTRACING_SHADER_TABLE_BYTE_ALIGNMENT);
+    dispatchDesc.HitGroupTable.SizeInBytes = D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES;
+    dispatchDesc.Width = width;
+    dispatchDesc.Height = height;
+    dispatchDesc.Depth = 1;
+
+    mList->DispatchRays(&dispatchDesc);
+}
+
 void CommandBuffer::CopyBufferToBuffer(std::shared_ptr<Resource> dst, std::shared_ptr<Resource> src)
 {
     mList->CopyResource(dst->GetResource(), src->GetResource());
@@ -205,6 +240,31 @@ void CommandBuffer::CopyBufferToTexture(std::shared_ptr<Resource> dst, std::shar
 
         mList->CopyTextureRegion(&dstCopy, 0, 0, 0, &srcCopy, nullptr);
     }
+}
+
+void CommandBuffer::UpdateTLAS(std::shared_ptr<TLAS> tlas, std::shared_ptr<Buffer> instanceBuffer, int numInstances)
+{
+    D3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_DESC buildDesc = {};
+    buildDesc.DestAccelerationStructureData = tlas->GetAddress();
+    buildDesc.Inputs.Type = D3D12_RAYTRACING_ACCELERATION_STRUCTURE_TYPE_TOP_LEVEL;
+    buildDesc.Inputs.Flags = D3D12_RAYTRACING_ACCELERATION_STRUCTURE_BUILD_FLAG_PERFORM_UPDATE;
+    buildDesc.Inputs.NumDescs = numInstances;
+    buildDesc.Inputs.DescsLayout = D3D12_ELEMENTS_LAYOUT_ARRAY;
+    buildDesc.Inputs.InstanceDescs = instanceBuffer->GetAddress();
+    buildDesc.SourceAccelerationStructureData =  tlas->GetAddress();
+    buildDesc.ScratchAccelerationStructureData = tlas->mScratch->GetAddress();
+
+    mList->BuildRaytracingAccelerationStructure(&buildDesc, 0, nullptr);
+}
+
+void CommandBuffer::BuildAccelerationStructure(std::shared_ptr<AccelerationStructure> as)
+{
+    D3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_DESC buildDesc = {};
+    buildDesc.Inputs = as->mInputs;
+    buildDesc.DestAccelerationStructureData = as->GetAddress();
+    buildDesc.ScratchAccelerationStructureData = as->mScratch->GetAddress();
+
+    mList->BuildRaytracingAccelerationStructure(&buildDesc, 0, nullptr);
 }
 
 void CommandBuffer::End()

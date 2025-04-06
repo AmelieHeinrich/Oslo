@@ -11,6 +11,9 @@
 #include "Buffer.hpp"
 #include "GraphicsPipeline.hpp"
 #include "ComputePipeline.hpp"
+#include "RaytracingPipeline.hpp"
+#include "MeshPipeline.hpp"
+#include "TLAS.hpp"
 
 #include <vector>
 
@@ -40,8 +43,12 @@ public:
     
     void SetViewport(float x, float y, float width, float height);
     void SetTopology(Topology topology);
+
     void SetGraphicsPipeline(std::shared_ptr<GraphicsPipeline> pipeline);
     void SetComputePipeline(std::shared_ptr<ComputePipeline> pipeline);
+    void SetRaytracingPipeline(std::shared_ptr<RaytracingPipeline> pipeline);
+    void SetMeshPipeline(std::shared_ptr<MeshPipeline> pipeline);
+
     void SetRenderTargets(const std::vector<std::shared_ptr<View>> targets, std::shared_ptr<View> depth);
     void SetVertexBuffer(std::shared_ptr<Buffer> buffer);
     void SetIndexBuffer(std::shared_ptr<Buffer> buffer);
@@ -55,10 +62,13 @@ public:
     void Draw(int vertexCount);
     void DrawIndexed(int indexCount);
     void Dispatch(int x, int y, int z);
+    void TraceRays(int width, int height);
 
     void CopyTextureToTexture(std::shared_ptr<Resource> dst, std::shared_ptr<Resource> src) { CopyBufferToBuffer(dst, src); } // It's all buffers anyway innit?
     void CopyBufferToBuffer(std::shared_ptr<Resource> dst, std::shared_ptr<Resource> src);
     void CopyBufferToTexture(std::shared_ptr<Resource> dst, std::shared_ptr<Resource> src);
+    void UpdateTLAS(std::shared_ptr<TLAS> tlas, std::shared_ptr<Buffer> instanceBuffer, int numInstances);
+    void BuildAccelerationStructure(std::shared_ptr<AccelerationStructure> as);
 
     void BeginGUI(int width, int height);
     void EndGUI();
@@ -71,4 +81,6 @@ private:
 
     ID3D12CommandAllocator* mAllocator = nullptr;
     ID3D12GraphicsCommandList10* mList = nullptr;
+
+    std::shared_ptr<RaytracingPipeline> mCurrentRT = nullptr;
 };
