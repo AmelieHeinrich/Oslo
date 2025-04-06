@@ -3,6 +3,7 @@
 
 # Specifics
 log.txt
+imgui.ini
 
 # Binaries
 .xmake

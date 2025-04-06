@@ -6,6 +6,7 @@
 #include "Window.hpp"
 
 #include <Core/Context.hpp>
+#include <backends/imgui_impl_sdl3.h>
 
 Window::Window(uint32_t width, uint32_t height, const std::string& title)
 {
@@ -29,6 +30,8 @@ void Window::Update()
 {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
+        ImGui_ImplSDL3_ProcessEvent(&event);
+
         if (event.type == SDL_EVENT_QUIT) {
             mRunning = false;
         }

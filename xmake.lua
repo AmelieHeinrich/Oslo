@@ -5,7 +5,7 @@
 
 add_rules("mode.debug", "mode.release", "mode.releasedbg")
 
-includes("ThirdParty")
+includes("ThirdParty", "Examples")
 
 target("Oslo")
     set_kind("static")
@@ -49,11 +49,3 @@ target("Oslo")
     before_link(function (target)
         os.cp("Binaries/*", "$(buildir)/$(plat)/$(arch)/$(mode)/")
     end)
-
-target("Sandbox")
-    set_rundir(".")
-    set_kind("binary")
-
-    add_files("Sandbox/**.cpp")
-    add_includedirs(".")
-    add_deps("Oslo")
