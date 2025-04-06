@@ -10,3 +10,11 @@ target("Triangle")
     add_files("$(projectdir)/Examples/Triangle/**.cpp")
     add_includedirs("$(projectdir)")
     add_deps("Oslo")
+
+target("Triangle")
+    set_rundir("$(projectdir)/Examples")
+    set_kind("binary")
+
+    add_files("$(projectdir)/Examples/Raytracing/**.cpp")
+    add_includedirs("$(projectdir)")
+    add_deps("Oslo")
