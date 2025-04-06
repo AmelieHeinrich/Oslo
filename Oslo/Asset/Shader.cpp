@@ -39,7 +39,7 @@ const char* GetProfileFromType(ShaderType type)
             return "as_6_7";
         }
         case ShaderType::Library: {
-            return "lib_6_7";
+            return "lib_6_6";
         }
     }
     return "???";
