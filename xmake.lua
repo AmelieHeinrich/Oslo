@@ -5,7 +5,9 @@
 
 add_rules("mode.debug", "mode.release", "mode.releasedbg")
 
-includes("ThirdParty", "Examples")
+includes("ThirdParty")
+-- Comment out if you want examples
+-- includes("Examples")
 
 target("Oslo")
     set_kind("static")
