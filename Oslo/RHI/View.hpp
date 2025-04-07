@@ -11,6 +11,7 @@
 
 enum class ViewType
 {
+    None,
     RenderTarget,
     DepthTarget,
     ShaderResource,
