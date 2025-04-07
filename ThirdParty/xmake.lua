@@ -6,6 +6,8 @@
 target("CGLTF")
     set_kind("static")
     add_files("cgltf.c")
+    add_headerfiles("CGLTF/cgltf.h")
+    add_includedirs("CGLTF/", { public = true })
 
 target("D3D12")
     set_kind("headeronly")
