@@ -26,6 +26,7 @@ RaytracingPipeline::RaytracingPipeline(RaytracingPipelineSpecs specs)
     hitGroup.HitGroupExport = L"HitGroup";
     hitGroup.Type = D3D12_HIT_GROUP_TYPE_TRIANGLES;
     hitGroup.ClosestHitShaderImport = L"ClosestHit";
+    hitGroup.AnyHitShaderImport = L"AnyHit";
 
     D3D12_RAYTRACING_SHADER_CONFIG shaderCfg = {};
     shaderCfg.MaxAttributeSizeInBytes = specs.AttribSize;
