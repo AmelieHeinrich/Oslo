@@ -54,6 +54,7 @@ void RHI::Init()
 
     sData.FrameFence = std::make_shared<Fence>();
     sData.FrameIndex = 0;
+    sData.FrameCount = 0;
     for (int i = 0; i < FRAMES_IN_FLIGHT; i++) {
         sData.FrameValues[i] = 0;
         sData.CommandBuffers[i] = std::make_shared<CommandBuffer>(sData.GraphicsQueue);
@@ -114,11 +115,14 @@ void RHI::Submit(const std::vector<std::shared_ptr<CommandBuffer>>& buffers)
 
 Frame RHI::Begin()
 {
+    sData.FrameCount++;
+
     Frame frame = {};
     frame.FrameIndex = sData.Surface->GetBackbufferIndex();
     frame.Backbuffer = sData.Surface->GetBackbuffer(frame.FrameIndex);
     frame.BackbufferView = sData.Surface->GetBackbufferView(frame.FrameIndex);
     frame.CommandBuffer = sData.CommandBuffers[frame.FrameIndex];
+    frame.FrameCount = sData.FrameCount;
     
     sData.FrameIndex = frame.FrameIndex;
 
@@ -141,4 +145,9 @@ void RHI::End()
 void RHI::Present(bool vsync)
 {
     sData.Surface->Present(vsync);
+}
+
+void RHI::ResetFrameCount()
+{
+    sData.FrameCount = 0;
 }

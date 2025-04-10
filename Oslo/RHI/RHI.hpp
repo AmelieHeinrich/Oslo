@@ -22,6 +22,7 @@ struct Frame
     std::shared_ptr<Texture> Backbuffer;
     std::shared_ptr<View> BackbufferView;
     uint32_t FrameIndex;
+    uint32_t FrameCount;
 
     int Width;
     int Height;
@@ -40,6 +41,7 @@ public:
     static Frame Begin();
     static void End();
     static void Present(bool vsync);
+    static void ResetFrameCount();
 
     static std::shared_ptr<Device> GetDevice() { return sData.Device; }
     static std::shared_ptr<Queue> GetGraphicsQueue() { return sData.GraphicsQueue; }
@@ -56,6 +58,7 @@ private:
         std::array<uint64_t, FRAMES_IN_FLIGHT> FrameValues;
         std::array<std::shared_ptr<CommandBuffer>, FRAMES_IN_FLIGHT> CommandBuffers;
         uint32_t FrameIndex;
+        uint32_t FrameCount;
 
         DescriptorHeap::Descriptor FontDescriptor;
     } sData;
