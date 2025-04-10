@@ -64,7 +64,9 @@ Device::Device()
 
     DXGI_ADAPTER_DESC1 desc;
     mAdapter->GetDesc1(&desc);
-    LOG_INFO("Selecting GPU %s", UTF::WideToAscii(desc.Description).c_str());
+    mDeviceName = UTF::WideToAscii(desc.Description);
+
+    LOG_INFO("Selecting GPU %s", mDeviceName.c_str());
 
     // Create device.
     result = D3D12CreateDevice(mAdapter, D3D_FEATURE_LEVEL_12_0, IID_PPV_ARGS(&mDevice));
